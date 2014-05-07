@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+<title>へぇボタン</title>
+<script>
+$(function() {
+	var canvas = document.getElementById('circle');
+
+	if (!canvas || !canvas.getContext) {return false;}
+	var ctx = canvas.getContext('2d');
+	ctx.beginPath();
+	ctx.arc(200, 200, 150, 0, 2 * Math.PI, true);
+	ctx.stroke();
+
+	var myCount = 0;
+	var socket = io.connect();
+
+	socket.on('serverReady', function (response) {
+		$('#info').html('').html('ボタンをクリックしてください');
+		response('[Client Ready]');
+	});
+
+	canvas.addEventListener('click', function() {
+		myCount++;
+		$('#mine').html(myCount);		
+		socket.emit('clicked', myCount);
+	}, true);
+
+	socket.on('totalChanged', function(data, fn) {
+		$('#total').html(data);
+		fn('[受信完了]');
+	});
+});
+</script>
+<body>
+<h1>へぇボタン</h1>
+<p id="info">お待ちください</p>
+<p id="total"></p>
+<p id="mine"></p>
+<canvas id="circle" width="400" height="400"></canvas>
+<style>
+	canvas {
+		display: block;
+		width: 400px;
+		height: 400px;
+		margin: 0 auto;
+	}
+	h1,
+	p {
+		font-family: :'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+		font-size: 36pt;
+		text-align: center;
+	}
+</style>
+</body>

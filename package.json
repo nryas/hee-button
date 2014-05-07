@@ -1,0 +1,16 @@
+{
+  "name": "heeButton",
+  "version": "0.0.0",
+  "description": "Just a hee-button.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "heroku",
+    "socket.io"
+  ],
+  "author": "nryas",
+  "license": "ISC"
+}
