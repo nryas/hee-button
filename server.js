@@ -23,20 +23,20 @@ io.sockets.on('connection', function (socket) {
 	socket.emit('serverReady', function (response) {
 		console.log(response + ' ID = ' + socket.id);
 	});
-});
 
+	socket.on('clicked', function (data) {
+		count++;
+		console.log('個人'+data+', 全体'+count);
 
-socket.on('clicked', function (data) {
-	count++;
-	console.log('個人'+data+', 全体'+count);
+		// クリックした本人にのみ全体の回数を送信
+		socket.emit('totalChanged', count, function (data) {
+			console.log(data);
+		});
 
-	// クリックした本人にのみ全体の回数を送信
-	socket.emit('totalChanged', count, function (data) {
-		console.log(data);
+		// それ以外のクライアントに全体の回数を送信
+		socket.broadcast.emit('totalChanged', count, function (data) {
+			// console.log(data);
+		});
 	});
 
-	// それ以外のクライアントに全体の回数を送信
-	socket.broadcast.emit('totalChanged', count, function (data) {
-		// console.log(data);
-	});
 });
