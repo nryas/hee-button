@@ -20,6 +20,7 @@ server.on('request', function(req, res) {
 				'Conent-Type': 'text/css;'
 			});
 		});
+		res.end(data);
 	});
 });
 server.listen(process.env.PORT || 1337);
