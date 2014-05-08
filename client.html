@@ -24,12 +24,12 @@ $(function() {
 
 	canvas.addEventListener('click', function() {
 		myCount++;
-		$('#mine').html(myCount);		
+		$('#mine').html('ひとり'+myCount);		
 		socket.emit('clicked', myCount);
 	}, true);
 
 	socket.on('totalChanged', function(data, fn) {
-		$('#total').html(data);
+		$('#total').html('合計'+data);
 		fn('[受信完了]');
 	});
 });
