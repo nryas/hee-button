@@ -15,12 +15,6 @@ server.on('request', function(req, res) {
 			'Conent-Type': 'text/html; charset=utf-8'
 		});
 		res.end(data);
-		fs.readFile('style.css', function (err, data) {
-			res.writeHead(200, {
-				'Conent-Type': 'text/css;'
-			});
-		});
-		res.end(data);
 	});
 });
 server.listen(process.env.PORT || 1337);
